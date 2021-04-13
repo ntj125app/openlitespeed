@@ -1,4 +1,4 @@
-FROM litespeedtech/openlitespeed
+FROM litespeedtech/openlitespeed:1.6.21-lsphp74
 
 ADD composer-setup.sh /tmp/composer-setup.sh
 
