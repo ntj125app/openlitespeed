@@ -5,7 +5,7 @@ ENV TINI_VERSION=v0.19.0
 COPY ./lsws-conf /tmp/lsws-conf
 COPY ./entrypoint.sh /entrypoint.sh
 
-RUN apt-get update && apt-get install -y tini locales wget cron pkg-config libmagickwand-dev && \
+RUN apt-get update && apt-get install -y tini locales wget cron pkg-config libmagickwand-dev build-essential && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "id_ID.UTF-8 UTF-8" >> /etc/locale.gen && \
