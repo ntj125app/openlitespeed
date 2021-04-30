@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y tini locales wget cron pkg-config && \
     rm -rf /usr/local/lsws/conf && \
     mv /lsws-conf /usr/local/lsws/conf && \
     mkdir -p /usr/local/lsws/modsec && \
-    mv /comodo /usr/local/lsws/modsec /comodo && \
+    mv /comodo /usr/local/lsws/modsec/comodo && \
     chown lsadm:lsadm -R /usr/local/lsws/conf && \
     chown lsadm:lsadm -R /usr/local/lsws/modsec/comodo && \
     pecl channel-update pecl.php.net && \
