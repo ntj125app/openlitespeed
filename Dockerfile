@@ -3,6 +3,7 @@ FROM debian:10-slim
 ENV TINI_VERSION=v0.19.0
 
 COPY ./lsws-conf /tmp/lsws-conf
+COPY ./comodo /tmp/comodo
 COPY ./entrypoint.sh /entrypoint.sh
 
 RUN apt-get update && apt-get install -y tini locales wget cron pkg-config && \
@@ -20,7 +21,9 @@ RUN apt-get update && apt-get install -y tini locales wget cron pkg-config && \
     ln -sf /usr/local/lsws/lsphp80/bin/pear /usr/bin/pear && \
     rm -rf /usr/local/lsws/conf && \
     mv /tmp/lsws-conf /usr/local/lsws/conf && \
+    mv /tmp/comodo /usr/local/lsws/modsec/comodo && \
     chown lsadm:lsadm -R /usr/local/lsws/conf && \
+    chown lsadm:lsadm -R /usr/local/lsws/modsec/comodo && \
     pecl channel-update pecl.php.net && \
     pecl install redis && \
     echo "extension=redis.so" >> /usr/local/lsws/lsphp80/etc/php/8.0/litespeed/php.ini && \
