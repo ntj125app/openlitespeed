@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y tini locales wget pkg-config build-esse
     chown lsadm:lsadm -R /usr/local/lsws/conf && \
     wget https://download.imagemagick.org/ImageMagick/download/ImageMagick-7.0.11-10.tar.gz && \
     tar xvzf ImageMagick-7.0.11-10.tar.gz && \
-    cd ImageMagick-7.0.11-10/ &&
+    cd ImageMagick-7.0.11-10/ && \
     ./configure && \
     make && \
     make install && \
