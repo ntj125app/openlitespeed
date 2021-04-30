@@ -5,7 +5,7 @@ ENV TINI_VERSION=v0.19.0
 COPY ./lsws-conf /tmp/lsws-conf
 COPY ./entrypoint.sh /entrypoint.sh
 
-RUN apt-get update && apt-get install -y tini locales wget cron pkg-config libmagickwand-dev build-essential && \
+RUN apt-get update && apt-get install -y tini locales wget cron pkg-config && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "id_ID.UTF-8 UTF-8" >> /etc/locale.gen && \
@@ -22,9 +22,8 @@ RUN apt-get update && apt-get install -y tini locales wget cron pkg-config libma
     mv /tmp/lsws-conf /usr/local/lsws/conf && \
     chown lsadm:lsadm -R /usr/local/lsws/conf && \
     pecl channel-update pecl.php.net && \
-    pecl install redis imagick && \
+    pecl install redis && \
     echo "extension=redis.so" >> /usr/local/lsws/lsphp80/etc/php/8.0/litespeed/php.ini && \
-    echo "extension=imagick.so" >> /usr/local/lsws/lsphp80/etc/php/8.0/litespeed/php.ini && \
     chmod a+x /entrypoint.sh && \
     apt-get clean
 
