@@ -6,7 +6,7 @@ COPY ./lsws-conf /lsws-conf
 COPY ./comodo /comodo
 COPY ./entrypoint.sh /entrypoint.sh
 
-RUN apt-get update && apt-get install -y tini locales wget cron pkg-config && \
+RUN apt-get update && apt-get install -y tini locales wget cron procps pkg-config && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "id_ID.UTF-8 UTF-8" >> /etc/locale.gen && \
