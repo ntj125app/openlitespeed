@@ -29,7 +29,7 @@ RUN curl https://pecl.php.net/get/redis-5.3.7.tgz --output /redis-5.3.7.tgz && \
     rm -r /redis-5.3.7 && \
     rm -r /redis-5.3.7.tgz
     # LSWS PREP
-RUN ln -sf /usr/bin/tini /sbin/tini && \
+RUN mkdir -p /usr/local/lsws/fcgi-bin && \
     ln -sf /usr/local/lsws/lsphp82/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp && \
     ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled && \
