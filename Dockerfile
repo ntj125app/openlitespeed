@@ -1,4 +1,4 @@
-FROM almalinux:8
+FROM almalinux:9
 
 COPY ./lsws-conf /lsws-conf
 COPY ./rules /rules
@@ -10,8 +10,7 @@ COPY ./max-file-upload.ini /max-file-upload.ini
 RUN dnf update -y && dnf install -y epel-release && \
     dnf install -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf glibc rcs && \
     dnf install -y fontconfig freetype libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 && \
-    rpm -Uvh http://rpms.litespeedtech.com/centos/litespeed-repo-1.3-1.el8.noarch.rpm && \
-    sed -i 's/failovermethod=priority/#failovermethod=priority/' /etc/yum.repos.d/litespeed.repo && \
+    curl https://repo.litespeed.sh | bash && \
     dnf install -y openlitespeed && \
     dnf install -y lsphp82 lsphp82-common lsphp82-devel lsphp82-curl lsphp82-dbg lsphp82-imap lsphp82-intl lsphp82-ldap lsphp82-opcache lsphp82-mysqlnd lsphp82-pgsql lsphp82-mbstring lsphp82-pspell lsphp82-snmp lsphp82-sqlite3 lsphp82-gd lsphp82-xml lsphp82-process lsphp82-sodium && \
     dnf clean all
