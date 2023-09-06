@@ -35,7 +35,8 @@ RUN ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     mv /lsws-conf /usr/local/lsws/conf && \
     mkdir -p /usr/local/lsws/modsec && \
     mv /rules /usr/local/lsws/modsec/rules && \
-    useradd -r -M -N -s /sbin/nologin -d / lsadm && \
+    groupadd -r lsadm && \
+    useradd -r -M -N -s /sbin/nologin -d / -g lsadm lsadm && \
     chown lsadm:lsadm -R /usr/local/lsws/conf && \
     chown lsadm:lsadm -R /usr/local/lsws/modsec/rules && \
     mv /mem-limit.ini /usr/local/lsws/lsphp82/etc/php.d/mem-limit.ini && \
