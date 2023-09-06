@@ -32,6 +32,7 @@ RUN curl https://pecl.php.net/get/redis-5.3.7.tgz --output /redis-5.3.7.tgz && \
 RUN mkdir -p /usr/local/lsws/fcgi-bin && \
     ln -sf /usr/local/lsws/lsphp82/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp && \
     ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
+    mkdir -p /usr/local/lsws/conf && \
     mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled && \
     mv /lsws-conf /usr/local/lsws/conf && \
     mkdir -p /usr/local/lsws/modsec && \
