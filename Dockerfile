@@ -1,12 +1,5 @@
 FROM almalinux:9
 
-COPY ./lsws-conf /lsws-conf
-COPY ./rules /rules
-COPY ./entrypoint.sh /entrypoint.sh
-COPY ./20-redis.ini /20-redis.ini
-COPY ./mem-limit.ini /mem-limit.ini
-COPY ./max-file-upload.ini /max-file-upload.ini
-
 RUN dnf update -y && dnf install -y epel-release && dnf config-manager --set-enabled crb && \
     dnf install -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf glibc rcs && \
     dnf install -y fontconfig freetype libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 && \
@@ -29,6 +22,19 @@ RUN curl https://pecl.php.net/get/redis-5.3.7.tgz --output /redis-5.3.7.tgz && \
     rm -r /redis-5.3.7 && \
     rm -r /redis-5.3.7.tgz && \
     dnf clean all
+    # IMAGE OPTIMIZERS
+RUN dnf autoremove -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf rcs && \
+    dnf autoremove -y fontconfig freetype libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 && \
+    dnf autoremove -y epel-release && \
+    dnf clean all
+
+COPY ./lsws-conf /lsws-conf
+COPY ./rules /rules
+COPY ./entrypoint.sh /entrypoint.sh
+COPY ./20-redis.ini /20-redis.ini
+COPY ./mem-limit.ini /mem-limit.ini
+COPY ./max-file-upload.ini /max-file-upload.ini
+
     # LSWS PREP
 RUN ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled && \
@@ -39,8 +45,7 @@ RUN ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     chown lsadm:lsadm -R /usr/local/lsws/modsec/rules && \
     mv /mem-limit.ini /usr/local/lsws/lsphp82/etc/php.d/mem-limit.ini && \
     mv /max-file-upload.ini /usr/local/lsws/lsphp82/etc/php.d/max-file-upload.ini && \
-    chmod a+x /entrypoint.sh && \
-    dnf clean all
+    chmod a+x /entrypoint.sh
 
 WORKDIR /var/www/vhosts/localhost
 
