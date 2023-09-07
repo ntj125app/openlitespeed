@@ -22,6 +22,7 @@ RUN curl https://pecl.php.net/get/redis-5.3.7.tgz --output /redis-5.3.7.tgz && \
     dnf clean all
     # IMAGE OPTIMIZERS
 RUN dnf autoremove -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf rcs && \
+    dnf autoremove -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm && \
     dnf autoremove -y epel-release && \
     dnf clean all
 
