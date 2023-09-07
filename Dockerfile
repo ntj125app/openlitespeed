@@ -2,11 +2,10 @@ FROM almalinux:9
 
 RUN dnf update -y && dnf install -y epel-release && dnf config-manager --set-enabled crb && \
     dnf install -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf glibc rcs && \
-    dnf install -y fontconfig freetype libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 && \
     # LSWS DEPS
-    dnf install -y libnsl aspell && \
-    dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm && \
     curl https://repo.litespeed.sh | bash && \
+    dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm && \
+    dnf install -y fontconfig freetype libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 libnsl aspell && \
     dnf install -y http://rpms.litespeedtech.com/centos/9/x86_64/RPMS/ols-modsecurity-1.7.18-1.el9.x86_64.rpm && \
     dnf install -y lsphp82 lsphp82-common lsphp82-devel lsphp82-curl lsphp82-dbg lsphp82-imap lsphp82-intl lsphp82-ldap lsphp82-opcache lsphp82-mysqlnd lsphp82-pgsql lsphp82-mbstring lsphp82-pspell lsphp82-snmp lsphp82-sqlite3 lsphp82-gd lsphp82-xml lsphp82-process lsphp82-sodium && \
     dnf clean all
@@ -23,7 +22,6 @@ RUN curl https://pecl.php.net/get/redis-5.3.7.tgz --output /redis-5.3.7.tgz && \
     dnf clean all
     # IMAGE OPTIMIZERS
 RUN dnf autoremove -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf rcs && \
-    dnf autoremove -y fontconfig freetype libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 && \
     dnf autoremove -y epel-release && \
     dnf clean all
 
