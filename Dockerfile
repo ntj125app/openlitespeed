@@ -27,7 +27,8 @@ RUN curl https://pecl.php.net/get/redis-5.3.7.tgz --output /redis-5.3.7.tgz && \
     make install && \
     mv /20-redis.ini /usr/local/lsws/lsphp82/etc/php.d/20-redis.ini && \
     rm -r /redis-5.3.7 && \
-    rm -r /redis-5.3.7.tgz
+    rm -r /redis-5.3.7.tgz && \
+    dnf clean all
     # LSWS PREP
 RUN ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled && \
@@ -38,7 +39,8 @@ RUN ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     chown lsadm:lsadm -R /usr/local/lsws/modsec/rules && \
     mv /mem-limit.ini /usr/local/lsws/lsphp82/etc/php.d/mem-limit.ini && \
     mv /max-file-upload.ini /usr/local/lsws/lsphp82/etc/php.d/max-file-upload.ini && \
-    chmod a+x /entrypoint.sh
+    chmod a+x /entrypoint.sh && \
+    dnf clean all
 
 WORKDIR /var/www/vhosts/localhost
 
