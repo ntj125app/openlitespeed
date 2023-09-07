@@ -1,7 +1,7 @@
 FROM almalinux:9
 
 RUN dnf update -y && dnf install -y epel-release && dnf config-manager --set-enabled crb && \
-    dnf install -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf glibc rcs && \
+    dnf install -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf rcs glibc && \
     # LSWS DEPS
     curl https://repo.litespeed.sh | bash && \
     dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm && \
