@@ -1,4 +1,4 @@
-FROM almalinux:9-minimal
+FROM almalinux:9
 
 RUN dnf update -y && dnf install -y epel-release && dnf config-manager --set-enabled crb && \
     dnf install -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf rcs glibc && \
