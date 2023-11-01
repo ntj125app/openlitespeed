@@ -10,15 +10,15 @@ RUN dnf update -y && dnf install -y epel-release && dnf config-manager --set-ena
     dnf install -y lsphp82 lsphp82-common lsphp82-devel lsphp82-curl lsphp82-dbg lsphp82-imap lsphp82-intl lsphp82-ldap lsphp82-opcache lsphp82-mysqlnd lsphp82-pgsql lsphp82-mbstring lsphp82-pspell lsphp82-snmp lsphp82-sqlite3 lsphp82-gd lsphp82-xml lsphp82-process lsphp82-sodium && \
     dnf clean all
     # REDIS MAKE
-RUN curl https://pecl.php.net/get/redis-6.0.1.tgz --output /redis-6.0.1.tgz && \
+RUN curl https://pecl.php.net/get/redis-6.0.2.tgz --output /redis-6.0.2.tgz && \
     cd / && \
-    tar -zxvf /redis-6.0.1.tgz && \
-    cd /redis-6.0.1 && \
+    tar -zxvf /redis-6.0.2.tgz && \
+    cd /redis-6.0.2 && \
     /usr/local/lsws/lsphp82/bin/phpize && \
     ./configure --enable-redis --with-php-config=/usr/local/lsws/lsphp82/bin/php-config && \
     make install && \
-    rm -r /redis-6.0.1 && \
-    rm -r /redis-6.0.1.tgz && \
+    rm -r /redis-6.0.2 && \
+    rm -r /redis-6.0.2.tgz && \
     dnf clean all
     # IMAGE OPTIMIZERS
 RUN dnf autoremove -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf rcs && \
