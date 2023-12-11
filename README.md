@@ -11,4 +11,4 @@ License can be read in [LICENSE](https://github.com/ntj125app/openlitespeed/blob
 
 # UPDATE
 
-[09 November 2023] - Updated repo
+[11 December 2023] - Updated repo
