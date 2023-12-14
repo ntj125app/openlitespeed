@@ -20,6 +20,17 @@ RUN curl https://pecl.php.net/get/redis-6.0.2.tgz --output /redis-6.0.2.tgz && \
     rm -r /redis-6.0.2 && \
     rm -r /redis-6.0.2.tgz && \
     dnf clean all
+    # EXCIMER MAKE
+RUN curl https://pecl.php.net/get/excimer-1.1.1.tgz --output /excimer-1.1.1.tgz && \
+    cd / && \
+    tar -zxvf /excimer-1.1.1.tgz && \
+    cd /excimer-1.1.1 && \
+    /usr/local/lsws/lsphp82/bin/phpize && \
+    ./configure --enable-excimer --with-php-config=/usr/local/lsws/lsphp82/bin/php-config && \
+    make install && \
+    rm -r /excimer-1.1.1 && \
+    rm -r /excimer-1.1.1.tgz && \
+    dnf clean all
     # IMAGE OPTIMIZERS
 RUN dnf autoremove -y glibc-all-langpacks procps pkg-config gcc gcc-c++ make autoconf rcs && \
     dnf autoremove -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm && \
@@ -30,6 +41,7 @@ COPY ./lsws-conf /lsws-conf
 COPY ./rules /rules
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./20-redis.ini /20-redis.ini
+COPY ./20-excimer.ini /20-excimer.ini
 COPY ./mem-limit.ini /mem-limit.ini
 COPY ./max-file-upload.ini /max-file-upload.ini
 
@@ -44,6 +56,7 @@ RUN ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     mv /mem-limit.ini /usr/local/lsws/lsphp82/etc/php.d/mem-limit.ini && \
     mv /max-file-upload.ini /usr/local/lsws/lsphp82/etc/php.d/max-file-upload.ini && \
     mv /20-redis.ini /usr/local/lsws/lsphp82/etc/php.d/20-redis.ini && \
+    mv /20-excimer.ini /usr/local/lsws/lsphp82/etc/php.d/20-excimer.ini && \
     chmod a+x /entrypoint.sh
 
 WORKDIR /var/www/vhosts/localhost
