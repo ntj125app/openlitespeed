@@ -57,7 +57,10 @@ RUN ln -sf /usr/local/lsws/lsphp82/bin/php /usr/bin/php && \
     mv /max-file-upload.ini /usr/local/lsws/lsphp82/etc/php.d/max-file-upload.ini && \
     mv /20-redis.ini /usr/local/lsws/lsphp82/etc/php.d/20-redis.ini && \
     mv /20-excimer.ini /usr/local/lsws/lsphp82/etc/php.d/20-excimer.ini && \
-    chmod a+x /entrypoint.sh
+    chmod a+x /entrypoint.sh && \
+    mkdir -p /tmp/lshttpd/cache && \
+    chown lsadm:lsadm -R /tmp/lshttpd/cache && \
+    chmod a+rwx -R /tmp/lshttpd/cache
 
 WORKDIR /var/www/vhosts/localhost
 
