@@ -29,7 +29,8 @@ COPY ./php.d/mem-limit.ini /usr/local/lsws/lsphp82/etc/php/8.2/mods-available/me
 
 COPY ./entrypoint.sh /entrypoint.sh
 
-RUN chmod a+x /entrypoint.sh && \
+RUN ln -sf /usr/local/lsws/lsphp82/bin/lsphp /usr/bin/php && \
+    chmod a+x /entrypoint.sh && \
     mkdir -p /tmp/lshttpd/cache && \
     chown lsadm:lsadm -R /tmp/lshttpd/cache && \
     chmod a+rwx -R /tmp/lshttpd/cache
