@@ -68,7 +68,8 @@ RUN chmod a+x /entrypoint.sh && \
 
     # CHECK IF PHP INSTALLED CORRECTLY
 RUN php -v && \
-    php -m
+    php -m && \
+    php -i
 
 WORKDIR /var/www/vhosts/localhost
 
