@@ -45,6 +45,7 @@ fi
 while true; do
     if [ $# -eq 0 ]; then
         if ! /usr/local/lsws/bin/lswsctrl status | grep 'litespeed is running' > /dev/null; then
+            /usr/local/lsws/bin/lswsctrl status >&1
             exit 143; # 128 + 15 -- SIGTERM
         fi
     fi
