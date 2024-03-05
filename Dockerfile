@@ -59,19 +59,33 @@ RUN curl https://pecl.php.net/get/excimer-1.1.1.tgz --output /excimer-1.1.1.tgz 
 
 COPY ./php.d/20-excimer.ini /usr/local/lsws/${LSPHP_VERSION}/etc/php/${PHP_MAJOR_VERSION}/mods-available/20-excimer.ini
 
-    # XDEBUG MAKE
-RUN curl https://xdebug.org/files/xdebug-3.1.1.tgz --output /xdebug-3.1.1.tgz && \
+    # XDEBUG MAKE (Need a PHP version >= 7.2.0 and < 8.2.0 (found 8.3.3))
+#RUN curl https://xdebug.org/files/xdebug-3.1.1.tgz --output /xdebug-3.1.1.tgz && \
+#    cd / && \
+#    tar -zxf /xdebug-3.1.1.tgz && \
+#    cd /xdebug-3.1.1 && \
+#    /usr/local/lsws/${LSPHP_VERSION}/bin/phpize && \
+#    ./configure --enable-xdebug --with-php-config=/usr/local/lsws/${LSPHP_VERSION}/bin/php-config && \
+#    make install -j$(nproc) && \
+#    rm -r /xdebug-3.1.1 && \
+#    rm -r /xdebug-3.1.1.tgz && \
+#    apt-get autoclean -y
+#
+#COPY ./php.d/99-xdebug.ini /usr/local/lsws/${LSPHP_VERSION}/etc/php/${PHP_MAJOR_VERSION}/mods-available/99-xdebug.ini
+
+    # PCOV MAKE
+RUN curl https://pecl.php.net/get/pcov-1.0.11.tgz --output /pcov-1.0.11.tgz && \
     cd / && \
-    tar -zxf /xdebug-3.1.1.tgz && \
-    cd /xdebug-3.1.1 && \
+    tar -zxf /pcov-1.0.11.tgz && \
+    cd /pcov-1.0.11 && \
     /usr/local/lsws/${LSPHP_VERSION}/bin/phpize && \
-    ./configure --enable-xdebug --with-php-config=/usr/local/lsws/${LSPHP_VERSION}/bin/php-config && \
+    ./configure --enable-pcov --with-php-config=/usr/local/lsws/${LSPHP_VERSION}/bin/php-config && \
     make install -j$(nproc) && \
-    rm -r /xdebug-3.1.1 && \
-    rm -r /xdebug-3.1.1.tgz && \
+    rm -r /pcov-1.0.11 && \
+    rm -r /pcov-1.0.11.tgz && \
     apt-get autoclean -y
 
-COPY ./php.d/99-xdebug.ini /usr/local/lsws/${LSPHP_VERSION}/etc/php/${PHP_MAJOR_VERSION}/mods-available/99-xdebug.ini
+COPY ./php.d/99-pcov.ini /usr/local/lsws/${LSPHP_VERSION}/etc/php/${PHP_MAJOR_VERSION}/mods-available/99-pcov.ini
 
     # REPLACE LSPHP in OLS SERVER
 
