@@ -1,7 +1,7 @@
 FROM ghcr.io/ntj125app/openlitespeed:php82
 
     #PHP Version
-ENV PHP_VERSION 8.3.3
+ENV PHP_VERSION 8.3.4
 ENV PHP_MAJOR_VERSION 8.3
 ENV LSPHP_VERSION lsphp83
 
