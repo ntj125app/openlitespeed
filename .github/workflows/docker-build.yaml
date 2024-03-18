@@ -1,0 +1,56 @@
+name: Docker Image Build
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  push:
+    branches:
+      - "*"
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches:
+      - "*"
+  workflow_dispatch:
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_REPO }}
+
+jobs:
+  build-base:
+    if: ${{ github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Get & Set Container Metadata
+        id: meta-packages
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: base
+      - name: Build & Push
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./docker-base
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-packages.outputs.tags }}
+          labels: ${{ steps.meta-packages.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
