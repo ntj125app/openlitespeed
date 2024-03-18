@@ -1,0 +1,12 @@
+{
+    "customizations": {
+      "codespaces": {
+        "repositories": {
+          "ntj125app/stack-config": {
+            "permissions": "read-all"
+          }
+        }
+      }
+    }
+  }
+  
