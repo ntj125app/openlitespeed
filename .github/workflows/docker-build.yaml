@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
 
     steps:
       - name: Checkout
@@ -54,3 +55,105 @@ jobs:
           labels: ${{ steps.meta-packages.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  build-lsphp:
+    needs: build-base
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    continue-on-error: ${{ matrix.php_version.deprecated || matrix.php_extensions.experimental }}
+    strategy:
+      max-parallel: 4
+      matrix:
+        php_version:
+          - version: 8.3
+            php_detail_version: 8.3.4
+            lsphp_version: lsphp83
+            php_tag_version: php83
+            oci_version: 3.3.0
+            deprecated: false
+            latest: true
+          - version: 8.2
+            php_detail_version: 8.2.17
+            lsphp_version: lsphp82
+            php_tag_version: php82
+            oci_version: 3.3.0
+            deprecated: false
+            latest: false
+          - version: 8.1
+            php_detail_version: 8.1.27
+            lsphp_version: lsphp81
+            php_tag_version: php81
+            oci_version: 3.2.1
+            deprecated: true
+            latest: false
+          - version: 8.0
+            php_detail_version: 8.0.30
+            lsphp_version: lsphp80
+            php_tag_version: php80
+            oci_version: 3.0.1
+            deprecated: true
+            latest: false
+          - version: 7.4
+            php_detail_version: 7.4.33
+            lsphp_version: lsphp74
+            php_tag_version: php74
+            oci_version: 2.2.0
+            deprecated: true
+            latest: false
+        php_extensions:
+          - name: "base"
+            experimental: false
+          - name: "pcov"
+            experimental: false
+          - name: "oci"
+            experimental: false
+          - name: "oci-pcov"
+            experimental: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Get & Set Container Metadata
+        id: meta-packages
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: ${{ matrix.php_version.php_tag_version }}-${{ matrix.php_extensions.name }}
+      - name: Build & Push
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./docker-lsphp
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-packages.outputs.tags }}
+          labels: ${{ steps.meta-packages.outputs.labels }}
+          target: ${{ matrix.php_extensions.name }}
+          build-args: |
+            BASEIMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:base
+            PHP_VERSION=${{ matrix.php_version.version }}
+            PHP_DETAIL_VERSION=${{ matrix.php_version.php_detail_version }}
+            LS_VERSION=${{ matrix.php_version.lsphp_version }}
+            OCI_VERSION=${{ matrix.php_version.oci_version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Push latest tag for base image
+        if: ${{ matrix.php_version.latest && github.event_name != 'pull_request' && matrix.php_extensions.name == 'base' }}
+        run: |
+          docker buildx imagetools create --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest ${{ steps.meta-packages.outputs.tags }}
+      - name: Push latest tag for other images
+        if: ${{ matrix.php_version.latest && github.event_name != 'pull_request' && matrix.php_extensions.name != 'base' }}
+        run: |
+          docker buildx imagetools create --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-${{ matrix.php_extensions.name }} ${{ steps.meta-packages.outputs.tags }}
