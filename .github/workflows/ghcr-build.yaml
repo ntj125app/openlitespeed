@@ -19,7 +19,21 @@ env:
   PACKAGE_NAME: ${{ github.repository_owner }}/${{ vars.IMAGE_NAME }}
 
 jobs:
+  cleanup-untagged-images:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Delete all containers from package without tags
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ vars.IMAGE_NAME }}
+          package-type: container
+          delete-only-untagged-versions: true
+
   build-base:
+    needs: cleanup-untagged-images
     if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
@@ -246,18 +260,3 @@ jobs:
             OCI_VERSION=${{ matrix.php_version.oci_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  cleanup-untagged-images:
-    needs: build-lsphp
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Delete all containers from package without tags
-        uses: actions/delete-package-versions@v5
-        with:
-          package-name: ${{ vars.IMAGE_NAME }}
-          package-type: container
-          delete-only-untagged-versions: true
-          min-versions-to-keep: 0
