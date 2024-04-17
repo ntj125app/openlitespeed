@@ -51,7 +51,7 @@ RUN curl https://pecl.php.net/get/excimer-${EXCIMER_VERSION}.tgz --output /excim
 
 COPY ./php.d/20-excimer.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-excimer.ini
 
-RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
+RUN apt-get install -y pkg-config && \
     curl https://pecl.php.net/get/memcached-${MEMCACHED_VERSION}.tgz --output /memcached-${MEMCACHED_VERSION}.tgz && \
     cd / && \
     tar -zxf /memcached-${MEMCACHED_VERSION}.tgz && \
