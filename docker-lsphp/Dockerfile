@@ -9,6 +9,7 @@ ARG PHP_DETAIL_VERSION
 
 ARG REDIS_VERSION=6.0.2
 ARG EXCIMER_VERSION=1.2.1
+ARG MEMCACHED_VERSION=3.2.0
 
 # Install Base PHP
 RUN apt-get install -y ${LS_VERSION} ${LS_VERSION}-common ${LS_VERSION}-curl ${LS_VERSION}-dbg ${LS_VERSION}-dev ${LS_VERSION}-imap ${LS_VERSION}-intl ${LS_VERSION}-ldap ${LS_VERSION}-modules-source ${LS_VERSION}-mysql ${LS_VERSION}-opcache ${LS_VERSION}-pgsql ${LS_VERSION}-pspell ${LS_VERSION}-snmp ${LS_VERSION}-sqlite3 ${LS_VERSION}-sybase ${LS_VERSION}-tidy && \
@@ -49,6 +50,20 @@ RUN curl https://pecl.php.net/get/excimer-${EXCIMER_VERSION}.tgz --output /excim
     apt-get autoclean -y
 
 COPY ./php.d/20-excimer.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-excimer.ini
+
+RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
+    curl https://pecl.php.net/get/memcached-${MEMCACHED_VERSION}.tgz --output /memcached-${MEMCACHED_VERSION}.tgz && \
+    cd / && \
+    tar -zxf /memcached-${MEMCACHED_VERSION}.tgz && \
+    cd /memcached-${MEMCACHED_VERSION} && \
+    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+    ./configure --enable-memcached --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    make install -j$(nproc) && \
+    rm -r /memcached-${MEMCACHED_VERSION} && \
+    rm -r /memcached-${MEMCACHED_VERSION}.tgz && \
+    apt-get autoclean -y
+
+COPY ./php.d/20-memcached.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-memcached.ini
 
 # Check PHP Version
 RUN php -v && \
