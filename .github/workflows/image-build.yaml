@@ -97,38 +97,39 @@ jobs:
           - version: 8.3
             php_detail_version: 8.3.4
             lsphp_version: lsphp83
+            php_tag_version: latest
+            oci_version: 3.3.0
+            deprecated: false
+          - version: 8.3
+            php_detail_version: 8.3.4
+            lsphp_version: lsphp83
             php_tag_version: php83
             oci_version: 3.3.0
             deprecated: false
-            latest: true
           - version: 8.2
             php_detail_version: 8.2.17
             lsphp_version: lsphp82
             php_tag_version: php82
             oci_version: 3.3.0
             deprecated: false
-            latest: false
           - version: 8.1
             php_detail_version: 8.1.27
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
             deprecated: true
-            latest: false
           - version: 8.0
             php_detail_version: 8.0.30
             lsphp_version: lsphp80
             php_tag_version: php80
             oci_version: 3.0.1
             deprecated: true
-            latest: false
           - version: 7.4
             php_detail_version: 7.4.33
             lsphp_version: lsphp74
             php_tag_version: php74
             oci_version: 2.2.0
             deprecated: true
-            latest: false
         php_extensions:
           - name: "base"
             experimental: false
@@ -186,16 +187,6 @@ jobs:
             OCI_VERSION=${{ matrix.php_version.oci_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Push latest tag for base image
-        if: ${{ matrix.php_version.latest && github.event_name != 'pull_request' && matrix.php_extensions.name == 'base' }}
-        run: |
-          docker buildx imagetools create --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest ${{ steps.meta-packages.outputs.tags }}
-          docker buildx imagetools create --tag ${{ env.REGISTRY_DOCKER }}/${{ env.IMAGE_NAME_DOCKER }}:latest ${{ steps.meta-packages.outputs.tags }}
-      - name: Push latest tag for other images
-        if: ${{ matrix.php_version.latest && github.event_name != 'pull_request' && matrix.php_extensions.name != 'base' }}
-        run: |
-          docker buildx imagetools create --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-${{ matrix.php_extensions.name }} ${{ steps.meta-packages.outputs.tags }}
-          docker buildx imagetools create --tag ${{ env.REGISTRY_DOCKER }}/${{ env.IMAGE_NAME_DOCKER }}:latest-${{ matrix.php_extensions.name }} ${{ steps.meta-packages.outputs.tags }}
 
   build-lsphp-gbika:
     needs: build-lsphp
@@ -214,35 +205,30 @@ jobs:
             php_tag_version: php83
             oci_version: 3.3.0
             deprecated: false
-            latest: false
           - version: 8.2
             php_detail_version: 8.2.17
             lsphp_version: lsphp82
             php_tag_version: php82
             oci_version: 3.3.0
             deprecated: false
-            latest: false
           - version: 8.1
             php_detail_version: 8.1.27
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
             deprecated: true
-            latest: false
           - version: 8.0
             php_detail_version: 8.0.30
             lsphp_version: lsphp80
             php_tag_version: php80
             oci_version: 3.0.1
             deprecated: true
-            latest: false
           - version: 7.4
             php_detail_version: 7.4.33
             lsphp_version: lsphp74
             php_tag_version: php74
             oci_version: 2.2.0
             deprecated: true
-            latest: false
         php_extensions:
           - name: "base"
             experimental: false
