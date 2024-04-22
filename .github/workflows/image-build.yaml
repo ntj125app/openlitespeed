@@ -18,7 +18,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   PACKAGE_NAME: ${{ github.repository_owner }}/${{ vars.IMAGE_NAME }}
   REGISTRY_DOCKER: docker.io
-  IMAGE_NAME_DOCKER: ${{ secrets.DOCKERHUB_REPO }}
+  IMAGE_NAME_DOCKER: ${{ vars.DOCKERHUB_REPO }}
 
 jobs:
   cleanup-untagged-images:
