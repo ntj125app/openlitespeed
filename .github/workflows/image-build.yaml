@@ -1,4 +1,4 @@
-name: GHCR Image Build
+name: Container Image Build
 
 on:
   schedule:
@@ -190,10 +190,12 @@ jobs:
         if: ${{ matrix.php_version.latest && github.event_name != 'pull_request' && matrix.php_extensions.name == 'base' }}
         run: |
           docker buildx imagetools create --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest ${{ steps.meta-packages.outputs.tags }}
+          docker buildx imagetools create --tag ${{ env.REGISTRY_DOCKER }}/${{ env.IMAGE_NAME_DOCKER }}:latest ${{ steps.meta-packages.outputs.tags }}
       - name: Push latest tag for other images
         if: ${{ matrix.php_version.latest && github.event_name != 'pull_request' && matrix.php_extensions.name != 'base' }}
         run: |
           docker buildx imagetools create --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-${{ matrix.php_extensions.name }} ${{ steps.meta-packages.outputs.tags }}
+          docker buildx imagetools create --tag ${{ env.REGISTRY_DOCKER }}/${{ env.IMAGE_NAME_DOCKER }}:latest-${{ matrix.php_extensions.name }} ${{ steps.meta-packages.outputs.tags }}
 
   build-lsphp-gbika:
     needs: build-lsphp
