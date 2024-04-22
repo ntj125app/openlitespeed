@@ -171,7 +171,7 @@ jobs:
             ${{ env.REGISTRY_DOCKER }}/${{ env.IMAGE_NAME_DOCKER }}
           tags: |
             ${{ matrix.php_version.php_tag_version }}-${{ matrix.php_extensions.name }}
-            type=raw,value=latest,enable=${{ matrix.php_extensions.php_tag_version == 'latest' }}
+            type=raw,value=latest,enable=${{ matrix.php_version.php_tag_version == 'latest' }}
 
       - name: Build & Push
         id: build-and-push
@@ -266,7 +266,7 @@ jobs:
             ${{ env.REGISTRY_DOCKER }}/${{ env.IMAGE_NAME_DOCKER }}
           tags: |
             ${{ matrix.php_version.php_tag_version }}-gbika-${{ matrix.php_extensions.name }}
-            type=raw,value=latest,enable=${{ matrix.php_extensions.php_tag_version == 'latest' }}
+            type=raw,value=latest,enable=${{ matrix.php_version.php_tag_version == 'latest' }}
 
       - name: Build & Push
         id: build-and-push
