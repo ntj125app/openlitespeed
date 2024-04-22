@@ -8,9 +8,6 @@ on:
       - "*"
     tags:
       - "v*.*.*"
-  pull_request:
-    branches:
-      - "*"
   workflow_dispatch:
 
 env:
@@ -114,7 +111,7 @@ jobs:
             oci_version: 3.3.0
             deprecated: false
           - version: 8.1
-            php_detail_version: 8.1.27
+            php_detail_version: 8.1.28
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
@@ -215,7 +212,7 @@ jobs:
             oci_version: 3.3.0
             deprecated: false
           - version: 8.1
-            php_detail_version: 8.1.27
+            php_detail_version: 8.1.28
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
