@@ -32,7 +32,6 @@ jobs:
           delete-only-untagged-versions: true
 
   build-base:
-    needs: cleanup-untagged-images
     if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
