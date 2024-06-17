@@ -71,7 +71,7 @@ jobs:
 
       - name: Build & Push
         id: build-and-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./docker-base
           push: ${{ github.event_name != 'pull_request' }}
@@ -171,7 +171,7 @@ jobs:
 
       - name: Build & Push
         id: build-and-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./docker-lsphp
           push: ${{ github.event_name != 'pull_request' }}
@@ -266,7 +266,7 @@ jobs:
 
       - name: Build & Push
         id: build-and-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./docker-gbika
           push: ${{ github.event_name != 'pull_request' }}
