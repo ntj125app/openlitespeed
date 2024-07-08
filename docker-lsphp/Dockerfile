@@ -10,6 +10,7 @@ ARG PHP_DETAIL_VERSION
 ARG REDIS_VERSION=6.0.2
 ARG EXCIMER_VERSION=1.2.1
 ARG MEMCACHED_VERSION=3.2.0
+ARG OPENSWOOLE_VERSION=22.1.2
 
 # Install Base PHP
 RUN apt-get install -y ${LS_VERSION} ${LS_VERSION}-common ${LS_VERSION}-curl ${LS_VERSION}-dbg ${LS_VERSION}-dev ${LS_VERSION}-imap ${LS_VERSION}-intl ${LS_VERSION}-ldap ${LS_VERSION}-modules-source ${LS_VERSION}-mysql ${LS_VERSION}-opcache ${LS_VERSION}-pgsql ${LS_VERSION}-pspell ${LS_VERSION}-snmp ${LS_VERSION}-sqlite3 ${LS_VERSION}-sybase ${LS_VERSION}-tidy && \
@@ -64,6 +65,19 @@ RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
     apt-get autoclean -y
 
 COPY ./php.d/20-memcached.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-memcached.ini
+
+RUN curl https://pecl.php.net/get/openswoole-${OPENSWOOLE_VERSION}.tgz --output /openswoole-${OPENSWOOLE_VERSION}.tgz && \
+    cd / && \
+    tar -zxf /openswoole-${OPENSWOOLE_VERSION}.tgz && \
+    cd /openswoole-${OPENSWOOLE_VERSION} && \
+    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+    ./configure --enable-openswoole --enable-openssl --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    make install -j$(nproc) && \
+    rm -r /openswoole-${OPENSWOOLE_VERSION} && \
+    rm -r /openswoole-${OPENSWOOLE_VERSION}.tgz && \
+    apt-get autoclean -y
+
+COPY ./php.d/20-openswoole.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-openswoole.ini
 
 # Check PHP Version
 RUN php -v && \

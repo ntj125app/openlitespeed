@@ -96,36 +96,42 @@ jobs:
             lsphp_version: lsphp83
             php_tag_version: latest
             oci_version: 3.3.0
+            openswoole_version: 22.1.2
             deprecated: false
           - version: 8.3
             php_detail_version: 8.3.6
             lsphp_version: lsphp83
             php_tag_version: php83
             oci_version: 3.3.0
+            openswoole_version: 22.1.2
             deprecated: false
           - version: 8.2
             php_detail_version: 8.2.18
             lsphp_version: lsphp82
             php_tag_version: php82
             oci_version: 3.3.0
+            openswoole_version: 22.1.2
             deprecated: false
           - version: 8.1
             php_detail_version: 8.1.28
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
+            openswoole_version: 22.1.2
             deprecated: true
           - version: 8.0
             php_detail_version: 8.0.30
             lsphp_version: lsphp80
             php_tag_version: php80
             oci_version: 3.0.1
+            openswoole_version: 22.1.2
             deprecated: true
           - version: 7.4
             php_detail_version: 7.4.33
             lsphp_version: lsphp74
             php_tag_version: php74
             oci_version: 2.2.0
+            openswoole_version: 22.1.2
             deprecated: true
         php_extensions:
           - name: "base"
@@ -184,6 +190,7 @@ jobs:
             PHP_DETAIL_VERSION=${{ matrix.php_version.php_detail_version }}
             LS_VERSION=${{ matrix.php_version.lsphp_version }}
             OCI_VERSION=${{ matrix.php_version.oci_version }}
+            OPENSWOOLE_VERSION=${{ matrix.php_version.openswoole_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -204,24 +211,6 @@ jobs:
             php_tag_version: php83
             oci_version: 3.3.0
             deprecated: false
-          - version: 8.2
-            php_detail_version: 8.2.18
-            lsphp_version: lsphp82
-            php_tag_version: php82
-            oci_version: 3.3.0
-            deprecated: false
-          - version: 8.1
-            php_detail_version: 8.1.28
-            lsphp_version: lsphp81
-            php_tag_version: php81
-            oci_version: 3.2.1
-            deprecated: true
-          - version: 8.0
-            php_detail_version: 8.0.30
-            lsphp_version: lsphp80
-            php_tag_version: php80
-            oci_version: 3.0.1
-            deprecated: true
           - version: 7.4
             php_detail_version: 7.4.33
             lsphp_version: lsphp74
