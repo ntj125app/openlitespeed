@@ -106,6 +106,14 @@ COPY ./php.d/99-pcov.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mo
 RUN php -v && \
     php -m
 
+# Install Node 22
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get autoclean -y
+
+# Check Node Version
+RUN node -v
+
 # Target Image
 FROM base AS oci
 
