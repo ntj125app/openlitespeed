@@ -20,8 +20,7 @@ RUN mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled
 
 COPY ./lsws-conf /usr/local/lsws/conf
 
-RUN chown lsadm:lsadm -R /usr/local/lsws/conf && \
-    chown lsadm:lsadm -R /usr/local/lsws/modsec/rules
+RUN chown lsadm:lsadm -R /usr/local/lsws/conf
 
 COPY ./entrypoint.sh /entrypoint.sh
 
