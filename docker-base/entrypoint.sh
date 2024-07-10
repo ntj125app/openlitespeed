@@ -12,15 +12,6 @@ sigterm_handler() {
     exit 143; # 128 + 15 -- SIGTERM
 }
 
-# SIGKILL signal handlers
-sigkill_handler() {
-    if [ $pid -ne 0 ]; then
-        kill -s SIGKILL $pid
-        wait $pid
-    fi
-    exit 137; # 128 + 9 -- SIGKILL
-}
-
 # CTRL + C signal handlers
 abort_handler() {
     if [ $pid -ne 0 ]; then
@@ -31,7 +22,6 @@ abort_handler() {
 }
 
 trap 'sigterm_handler' SIGTERM
-trap 'sigkill_handler' SIGKILL
 trap 'abort_handler' SIGINT INT
 
 # run application if no ARGS / CMD
