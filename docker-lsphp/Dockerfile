@@ -106,13 +106,28 @@ COPY ./php.d/99-pcov.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mo
 RUN php -v && \
     php -m
 
-# Install Node 22
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs && \
+# Target Image
+FROM base AS xdebug
+
+ARG XDEBUG_VERSION=3.3.2
+
+# Install XDEBUG
+RUN curl https://pecl.php.net/get/xdebug-${XDEBUG_VERSION}.tgz --output /xdebug-${XDEBUG_VERSION}.tgz && \
+    cd / && \
+    tar -zxf /xdebug-${XDEBUG_VERSION}.tgz && \
+    cd /xdebug-${XDEBUG_VERSION} && \
+    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+    ./configure --enable-xdebug --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    make install -j$(nproc) && \
+    rm -r /xdebug-${XDEBUG_VERSION} && \
+    rm -r /xdebug-${XDEBUG_VERSION}.tgz && \
     apt-get autoclean -y
 
-# Check Node Version
-RUN node -v
+COPY ./php.d/99-xdebug.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/99-xdebug.ini
+
+# Check PHP Version
+RUN php -v && \
+    php -m
 
 # Target Image
 FROM base AS oci

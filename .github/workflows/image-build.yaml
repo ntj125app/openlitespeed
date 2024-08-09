@@ -136,9 +136,13 @@ jobs:
         php_extensions:
           - name: "base"
             experimental: false
+          - name: "xdebug"
+            experimental: false
           - name: "pcov"
             experimental: false
           - name: "oci"
+            experimental: false
+          - name: "oci-xdebug"
             experimental: false
           - name: "oci-pcov"
             experimental: false
