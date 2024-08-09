@@ -8,7 +8,7 @@ ARG LS_VERSION
 ARG PHP_DETAIL_VERSION
 
 ARG REDIS_VERSION=6.0.2
-ARG EXCIMER_VERSION=1.2.1
+ARG EXCIMER_VERSION=1.2.2
 ARG MEMCACHED_VERSION=3.2.0
 ARG OPENSWOOLE_VERSION=22.1.2
 
@@ -189,3 +189,22 @@ COPY ./php.d/99-pcov.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mo
 # Check PHP Version
 RUN php -v && \
     php -m
+
+# Target Image
+FROM oci AS oci-xdebug
+
+ARG XDEBUG_VERSION=3.3.2
+
+# Install XDEBUG
+RUN curl https://pecl.php.net/get/xdebug-${XDEBUG_VERSION}.tgz --output /xdebug-${XDEBUG_VERSION}.tgz && \
+    cd / && \
+    tar -zxf /xdebug-${XDEBUG_VERSION}.tgz && \
+    cd /xdebug-${XDEBUG_VERSION} && \
+    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+    ./configure --enable-xdebug --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    make install -j$(nproc) && \
+    rm -r /xdebug-${XDEBUG_VERSION} && \
+    rm -r /xdebug-${XDEBUG_VERSION}.tgz && \
+    apt-get autoclean -y
+
+COPY ./php.d/99-xdebug.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/99-xdebug.ini
