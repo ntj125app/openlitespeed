@@ -137,7 +137,7 @@ jobs:
             php_tag_version: php74
             oci_version: 2.2.0
             openswoole_version: 22.0.0
-            xdebug_version: 3.2.2
+            xdebug_version: 3.1.6
             deprecated: true
         php_extensions:
           - name: "base"
