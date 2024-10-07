@@ -8,3 +8,7 @@ This repo already apply some of the latest patches and pear / pearl packages for
 ## LICENSE
 
 License can be read in [LICENSE](https://github.com/ntj125app/openlitespeed/blob/latest/LICENSE)
+
+## Updates
+
+07 Oct 2024
