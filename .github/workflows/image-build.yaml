@@ -123,22 +123,6 @@ jobs:
             openswoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: true
-          - version: 8.0
-            php_detail_version: 8.0.30
-            lsphp_version: lsphp80
-            php_tag_version: php80
-            oci_version: 3.0.1
-            openswoole_version: 22.0.0
-            xdebug_version: 3.3.2
-            deprecated: true
-          - version: 7.4
-            php_detail_version: 7.4.33
-            lsphp_version: lsphp74
-            php_tag_version: php74
-            oci_version: 2.2.0
-            openswoole_version: 22.0.0
-            xdebug_version: 3.1.6
-            deprecated: true
         php_extensions:
           - name: "base"
             experimental: false
