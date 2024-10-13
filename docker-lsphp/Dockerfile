@@ -11,6 +11,7 @@ ARG REDIS_VERSION=6.0.2
 ARG EXCIMER_VERSION=1.2.2
 ARG MEMCACHED_VERSION=3.2.0
 ARG OPENSWOOLE_VERSION=22.1.2
+ARG MONGODB_VERSION=1.20.0
 
 # Install Base PHP
 RUN apt-get install -y ${LS_VERSION} ${LS_VERSION}-common ${LS_VERSION}-curl ${LS_VERSION}-dbg ${LS_VERSION}-dev ${LS_VERSION}-imap ${LS_VERSION}-intl ${LS_VERSION}-ldap ${LS_VERSION}-modules-source ${LS_VERSION}-mysql ${LS_VERSION}-opcache ${LS_VERSION}-pgsql ${LS_VERSION}-pspell ${LS_VERSION}-snmp ${LS_VERSION}-sqlite3 ${LS_VERSION}-sybase ${LS_VERSION}-tidy && \
@@ -38,6 +39,19 @@ RUN curl https://pecl.php.net/get/redis-${REDIS_VERSION}.tgz --output /redis-${R
     apt-get autoclean -y
 
 COPY ./php.d/20-redis.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-redis.ini
+
+RUN curl https://pecl.php.net/get/redis-${MONGODB_VERSION}.tgz --output /redis-${MONGODB_VERSION}.tgz && \
+    cd / && \
+    tar -zxf /redis-${MONGODB_VERSION}.tgz && \
+    cd /redis-${MONGODB_VERSION} && \
+    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+    ./configure --enable-redis --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    make install -j$(nproc) && \
+    rm -r /redis-${MONGODB_VERSION} && \
+    rm -r /redis-${MONGODB_VERSION}.tgz && \
+    apt-get autoclean -y
+
+COPY ./php.d/20-mongodb.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-mongodb.ini
 
 RUN curl https://pecl.php.net/get/excimer-${EXCIMER_VERSION}.tgz --output /excimer-${EXCIMER_VERSION}.tgz && \
     cd / && \
