@@ -40,15 +40,15 @@ RUN curl https://pecl.php.net/get/redis-${REDIS_VERSION}.tgz --output /redis-${R
 
 COPY ./php.d/20-redis.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-redis.ini
 
-RUN curl https://pecl.php.net/get/redis-${MONGODB_VERSION}.tgz --output /redis-${MONGODB_VERSION}.tgz && \
+RUN curl https://pecl.php.net/get/mongodb-${MONGODB_VERSION}.tgz --output /mongodb-${MONGODB_VERSION}.tgz && \
     cd / && \
-    tar -zxf /redis-${MONGODB_VERSION}.tgz && \
-    cd /redis-${MONGODB_VERSION} && \
+    tar -zxf /mongodb-${MONGODB_VERSION}.tgz && \
+    cd /mongodb-${MONGODB_VERSION} && \
     /usr/local/lsws/${LS_VERSION}/bin/phpize && \
     ./configure --enable-redis --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
     make install -j$(nproc) && \
-    rm -r /redis-${MONGODB_VERSION} && \
-    rm -r /redis-${MONGODB_VERSION}.tgz && \
+    rm -r /mongodb-${MONGODB_VERSION} && \
+    rm -r /mongodb-${MONGODB_VERSION}.tgz && \
     apt-get autoclean -y
 
 COPY ./php.d/20-mongodb.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-mongodb.ini
