@@ -3,7 +3,8 @@ FROM litespeedtech/openlitespeed:1.8.2-lsphp83
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y curl wget && \
     apt-get autoclean -y && \
     mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled && \
-    rm /entrypoint.sh
+    rm /entrypoint.sh && \
+    bash bin/webadmin.sh --upgrade
 
 COPY ./lsws-conf /usr/local/lsws/conf
 
