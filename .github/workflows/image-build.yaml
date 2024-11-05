@@ -96,7 +96,7 @@ jobs:
             lsphp_version: lsphp83
             php_tag_version: latest
             oci_version: 3.4.0
-            swoole_version: 22.1.2
+            swoole_version: 5.1.5
             xdebug_version: 3.3.2
             deprecated: false
           - version: 8.3
@@ -104,7 +104,7 @@ jobs:
             lsphp_version: lsphp83
             php_tag_version: php83
             oci_version: 3.4.0
-            swoole_version: 22.1.2
+            swoole_version: 5.1.5
             xdebug_version: 3.3.2
             deprecated: false
           - version: 8.2
@@ -112,7 +112,7 @@ jobs:
             lsphp_version: lsphp82
             php_tag_version: php82
             oci_version: 3.4.0
-            swoole_version: 22.1.2
+            swoole_version: 5.1.5
             xdebug_version: 3.3.2
             deprecated: false
           - version: 8.1
@@ -120,7 +120,7 @@ jobs:
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
-            swoole_version: 22.1.2
+            swoole_version: 5.1.5
             xdebug_version: 3.3.2
             deprecated: true
         php_extensions:
