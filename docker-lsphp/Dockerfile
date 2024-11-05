@@ -17,7 +17,8 @@ ARG MONGODB_VERSION=1.20.0
 RUN apt-get install -y ${LS_VERSION} ${LS_VERSION}-common ${LS_VERSION}-curl ${LS_VERSION}-dbg ${LS_VERSION}-dev ${LS_VERSION}-imap ${LS_VERSION}-intl ${LS_VERSION}-ldap ${LS_VERSION}-modules-source ${LS_VERSION}-mysql ${LS_VERSION}-opcache ${LS_VERSION}-pgsql ${LS_VERSION}-pspell ${LS_VERSION}-snmp ${LS_VERSION}-sqlite3 ${LS_VERSION}-sybase ${LS_VERSION}-tidy && \
     apt-get autoclean -y && \
     ln -sf /usr/local/lsws/${LS_VERSION}/bin/php /usr/bin/php && \
-    ln -sf /usr/local/lsws/${LS_VERSION} /usr/local/lsws/lsactive
+    ln -sf /usr/local/lsws/${LS_VERSION} /usr/local/lsws/lsactive &&\
+    chmod a+x /entrypoint.sh
 
 COPY ./php.d/max-file-upload.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/max-file-upload.ini
 COPY ./php.d/mem-limit.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/mem-limit.ini
