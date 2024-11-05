@@ -9,10 +9,6 @@ RUN apt-get update && apt-get install -y curl && \
     /lsup.sh && \
     apt-get autoclean -y
 
-# UPDATE IMAGE
-RUN apt-get upgrade -y && \
-    apt-get autoclean -y
-
 # LSWS PREP
 RUN mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled
 
