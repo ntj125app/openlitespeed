@@ -7,9 +7,9 @@ ARG PHP_VERSION
 ARG LS_VERSION
 ARG PHP_DETAIL_VERSION
 
-ARG REDIS_VERSION=6.0.2
+ARG REDIS_VERSION=6.1.0
 ARG EXCIMER_VERSION=1.2.2
-ARG MEMCACHED_VERSION=3.2.0
+ARG MEMCACHED_VERSION=3.3.0
 ARG SWOOLE_VERSION=5.1.5
 ARG MONGODB_VERSION=1.20.0
 
@@ -77,7 +77,8 @@ RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
 
 COPY ./php.d/20-memcached.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-memcached.ini
 
-RUN curl https://pecl.php.net/get/swoole-${SWOOLE_VERSION}.tgz --output /swoole-${SWOOLE_VERSION}.tgz && \
+RUN apt-get install -y libbrotli-dev && \
+    curl https://pecl.php.net/get/swoole-${SWOOLE_VERSION}.tgz --output /swoole-${SWOOLE_VERSION}.tgz && \
     cd / && \
     tar -zxf /swoole-${SWOOLE_VERSION}.tgz && \
     cd /swoole-${SWOOLE_VERSION} && \
