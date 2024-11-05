@@ -157,6 +157,7 @@ RUN apt-get install -y libaio-dev libaio1t64 unzip && mkdir -p /usr/oracle && \
     unzip sdk.zip && \
     rm -f oic.zip && \
     rm -f sdk.zip && \
+    ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 /usr/lib/x86_64-linux-gnu/libaio.so.1 && \
     apt-get autoclean -y
 
 ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}:$LD_LIBRARY_PATH
