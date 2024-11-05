@@ -7,7 +7,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get ins
 
 COPY ./lsws-conf /usr/local/lsws/conf
 
-RUN chown lsadm:lsadm -R /usr/local/lsws/conf
+RUN chown lsadm:nogroup -R /usr/local/lsws/conf && chmod o-rwx -R /usr/local/lsws/conf
 
 COPY ./entrypoint.sh /entrypoint.sh
 
