@@ -1,4 +1,4 @@
-FROM litespeedtech/openlitespeed:1.8.2-lsphp83
+FROM litespeedtech/openlitespeed:latest
 
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y curl wget && \
     apt-get autoclean -y && \
