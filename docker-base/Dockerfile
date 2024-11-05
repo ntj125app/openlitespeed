@@ -3,7 +3,7 @@ FROM debian:12-slim
 # FOR DEBIAN CREATE GROUP ALIAS NOBODY FROM ALREADY EXISTING NOGROUP
 RUN groupadd -o -g 65534 nobody
 
-RUN apt-get update && apt-get install -y curl wget && \
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y curl wget && \
     curl -o /lsup.sh https://raw.githubusercontent.com/litespeedtech/openlitespeed/master/dist/admin/misc/lsup.sh && \
     chmod +x /lsup.sh && \
     /lsup.sh && \
