@@ -11,7 +11,7 @@ COPY ./lsws-conf /usr/local/lsws/conf
 COPY ./entrypoint.sh /entrypoint.sh
 
 RUN chown lsadm:nogroup -R /usr/local/lsws/conf && chmod o-rwx -R /usr/local/lsws/conf && \
-    chmod +x /entrypoint.sh
+    chmod a+x /entrypoint.sh
 
 WORKDIR /var/www/vhosts/localhost
 
