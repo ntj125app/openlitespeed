@@ -1,16 +1,9 @@
-FROM debian:12-slim
-
-# FOR DEBIAN CREATE GROUP ALIAS NOBODY FROM ALREADY EXISTING NOGROUP
-RUN groupadd -o -g 65534 nobody
+FROM litespeedtech/openlitespeed:latest
 
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y curl wget && \
-    curl -o /lsup.sh https://raw.githubusercontent.com/litespeedtech/openlitespeed/master/dist/admin/misc/lsup.sh && \
-    chmod +x /lsup.sh && \
-    /lsup.sh && \
-    apt-get autoclean -y
-
-# LSWS PREP
-RUN mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled
+    apt-get autoclean -y && \
+    mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled && \
+    rm /entrypoint.sh
 
 COPY ./lsws-conf /usr/local/lsws/conf
 
