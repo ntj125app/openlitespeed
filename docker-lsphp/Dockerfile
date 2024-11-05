@@ -161,7 +161,7 @@ RUN apt-get install -y libaio-dev libaio1t64 unzip && mkdir -p /usr/oracle && \
     ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 /usr/lib/x86_64-linux-gnu/libaio.so.1 && \
     apt-get autoclean -y
 
-ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}
 
 RUN curl https://pecl.php.net/get/oci8-${OCI_VERSION}.tgz --output /oci8-${OCI_VERSION}.tgz && \
     cd / && \
