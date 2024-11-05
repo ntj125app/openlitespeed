@@ -1,4 +1,4 @@
-ARG BASEIMAGE
+ARG BASEIMAGE=ghcr.io/ntj125app/openlitespeed:base
 
 # Base Image
 FROM ${BASEIMAGE} AS base
