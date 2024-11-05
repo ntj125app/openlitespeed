@@ -10,7 +10,7 @@ ARG PHP_DETAIL_VERSION
 ARG REDIS_VERSION=6.0.2
 ARG EXCIMER_VERSION=1.2.2
 ARG MEMCACHED_VERSION=3.2.0
-ARG OPENSWOOLE_VERSION=22.1.2
+ARG SWOOLE_VERSION=22.1.2
 ARG MONGODB_VERSION=1.20.0
 
 # Install Base PHP
@@ -77,18 +77,18 @@ RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
 
 COPY ./php.d/20-memcached.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-memcached.ini
 
-RUN curl https://pecl.php.net/get/openswoole-${OPENSWOOLE_VERSION}.tgz --output /openswoole-${OPENSWOOLE_VERSION}.tgz && \
+RUN curl https://pecl.php.net/get/swoole-${SWOOLE_VERSION}.tgz --output /swoole-${SWOOLE_VERSION}.tgz && \
     cd / && \
-    tar -zxf /openswoole-${OPENSWOOLE_VERSION}.tgz && \
-    cd /openswoole-${OPENSWOOLE_VERSION} && \
+    tar -zxf /swoole-${SWOOLE_VERSION}.tgz && \
+    cd /swoole-${SWOOLE_VERSION} && \
     /usr/local/lsws/${LS_VERSION}/bin/phpize && \
-    ./configure --enable-openswoole --enable-openssl --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    ./configure --enable-swoole --enable-openssl --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
     make install -j$(nproc) && \
-    rm -r /openswoole-${OPENSWOOLE_VERSION} && \
-    rm -r /openswoole-${OPENSWOOLE_VERSION}.tgz && \
+    rm -r /swoole-${SWOOLE_VERSION} && \
+    rm -r /swoole-${SWOOLE_VERSION}.tgz && \
     apt-get autoclean -y
 
-COPY ./php.d/20-openswoole.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-openswoole.ini
+COPY ./php.d/20-swoole.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-swoole.ini
 
 # Check PHP Version
 RUN php -v && \
@@ -157,9 +157,9 @@ RUN apt-get install -y libaio-dev libaio1t64 unzip && mkdir -p /usr/oracle && \
     unzip sdk.zip && \
     rm -f oic.zip && \
     rm -f sdk.zip && \
-    echo /usr/oracle/${ORACLE_ZIP_DIR} > /etc/ld.so.conf.d/oracle-instantclient.conf && \
-    ldconfig && \
     apt-get autoclean -y
+
+ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}:$LD_LIBRARY_PATH
 
 RUN curl https://pecl.php.net/get/oci8-${OCI_VERSION}.tgz --output /oci8-${OCI_VERSION}.tgz && \
     cd / && \

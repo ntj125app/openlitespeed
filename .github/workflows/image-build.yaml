@@ -96,7 +96,7 @@ jobs:
             lsphp_version: lsphp83
             php_tag_version: latest
             oci_version: 3.4.0
-            openswoole_version: 22.1.2
+            swoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: false
           - version: 8.3
@@ -104,7 +104,7 @@ jobs:
             lsphp_version: lsphp83
             php_tag_version: php83
             oci_version: 3.4.0
-            openswoole_version: 22.1.2
+            swoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: false
           - version: 8.2
@@ -112,7 +112,7 @@ jobs:
             lsphp_version: lsphp82
             php_tag_version: php82
             oci_version: 3.4.0
-            openswoole_version: 22.1.2
+            swoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: false
           - version: 8.1
@@ -120,7 +120,7 @@ jobs:
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
-            openswoole_version: 22.1.2
+            swoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: true
         php_extensions:
@@ -184,7 +184,7 @@ jobs:
             PHP_DETAIL_VERSION=${{ matrix.php_version.php_detail_version }}
             LS_VERSION=${{ matrix.php_version.lsphp_version }}
             OCI_VERSION=${{ matrix.php_version.oci_version }}
-            OPENSWOOLE_VERSION=${{ matrix.php_version.openswoole_version }}
+            SWOOLE_VERSION=${{ matrix.php_version.swoole_version }}
             XDEBUG_VERSION=${{ matrix.php_version.xdebug_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
