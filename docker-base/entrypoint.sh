@@ -41,6 +41,6 @@ while true; do
     fi
 
     # prevent container from exiting and get stdout
-    tail -f /usr/local/lsws/logs/error.log >&1 &
+    tail -f /usr/local/lsws/logs/main.log >&1 &
     wait ${!}
 done

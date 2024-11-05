@@ -3,12 +3,10 @@ FROM debian:12-slim
 # FOR DEBIAN CREATE GROUP ALIAS NOBODY FROM ALREADY EXISTING NOGROUP
 RUN groupadd -o -g 65534 nobody
 
-COPY ./repo.litespeed.sh /repo.litespeed.sh
-
 RUN apt-get update && apt-get install -y curl && \
-    chmod +x /repo.litespeed.sh && \
-    /repo.litespeed.sh && \
-    apt-get install -y ols-modsecurity && \
+    curl -o /lsup.sh https://raw.githubusercontent.com/litespeedtech/openlitespeed/master/dist/admin/misc/lsup.sh && \
+    chmod +x /lsup.sh && \
+    /lsup.sh && \
     apt-get autoclean -y
 
 # UPDATE IMAGE
