@@ -146,10 +146,11 @@ FROM base AS oci
 ARG ORACLE_VERSION=21.13.0.0.0
 ARG ORACLE_SIMPLE_VERSION=2113000
 ARG ORACLE_ZIP_DIR=instantclient_21_13
-ARG OCI_VERSION=3.3.0
+ARG OCI_VERSION=3.4.0
 
 # Install Oracle Instant Client
-RUN apt-get install -y libaio-dev libaio1t64 unzip && mkdir -p /usr/oracle && ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 /usr/lib/x86_64-linux-gnu/libaio.so.1 && \
+RUN apt-get install -y libaio-dev libaio1t64 unzip && mkdir -p /usr/oracle && \
+    ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 /usr/lib/x86_64-linux-gnu/libaio.so.1 && \
     curl https://download.oracle.com/otn_software/linux/instantclient/${ORACLE_SIMPLE_VERSION}/instantclient-basic-linux.x64-${ORACLE_VERSION}dbru.zip --output /usr/oracle/oic.zip && \
     curl https://download.oracle.com/otn_software/linux/instantclient/${ORACLE_SIMPLE_VERSION}/instantclient-sdk-linux.x64-${ORACLE_VERSION}dbru.zip --output /usr/oracle/sdk.zip && \
     cd /usr/oracle && \

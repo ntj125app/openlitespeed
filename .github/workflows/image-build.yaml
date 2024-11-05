@@ -95,7 +95,7 @@ jobs:
             php_detail_version: 8.3.8
             lsphp_version: lsphp83
             php_tag_version: latest
-            oci_version: 3.3.0
+            oci_version: 3.4.0
             openswoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: false
@@ -103,7 +103,7 @@ jobs:
             php_detail_version: 8.3.8
             lsphp_version: lsphp83
             php_tag_version: php83
-            oci_version: 3.3.0
+            oci_version: 3.4.0
             openswoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: false
@@ -111,7 +111,7 @@ jobs:
             php_detail_version: 8.2.20
             lsphp_version: lsphp82
             php_tag_version: php82
-            oci_version: 3.3.0
+            oci_version: 3.4.0
             openswoole_version: 22.1.2
             xdebug_version: 3.3.2
             deprecated: false
