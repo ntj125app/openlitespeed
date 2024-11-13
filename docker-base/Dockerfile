@@ -2,9 +2,9 @@ FROM litespeedtech/openlitespeed:latest
 
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y curl wget && \
     apt-get autoclean -y && \
-    mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled && \
     rm /entrypoint.sh && \
-    /usr/local/lsws/admin/misc/lsup.sh
+    /usr/local/lsws/admin/misc/lsup.sh && \
+    mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled
 
 COPY ./lsws-conf /usr/local/lsws/conf
 
