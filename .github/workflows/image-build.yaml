@@ -29,6 +29,7 @@ jobs:
         with:
           package-name: ${{ vars.IMAGE_NAME }}
           package-type: container
+          min-versions-to-keep: 20
           delete-only-untagged-versions: true
 
   build-base:
