@@ -110,7 +110,7 @@ jobs:
             php_detail_version: 8.2.26
             lsphp_version: lsphp82
             php_tag_version: php82
-            oci_version: 3.4.0
+            oci_version: 3.3.0
             pdo_oci_version: "1.0"
             deprecated: false
           - version: 8.1
