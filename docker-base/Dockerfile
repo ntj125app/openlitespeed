@@ -3,7 +3,7 @@ FROM debian:12-slim
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y curl wget && \
     wget -O - https://repo.litespeed.sh | bash && \
     apt-get autoclean -y && \
-    rm /entrypoint.sh && \
+    rm /entrypoint.sh || true && \
     /usr/local/lsws/admin/misc/lsup.sh && \
     mv /usr/local/lsws/conf /usr/local/lsws/conf-disabled
 
