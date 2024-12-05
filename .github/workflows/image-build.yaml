@@ -113,7 +113,7 @@ jobs:
             lsphp_version: lsphp82
             php_tag_version: php82
             oci_version: 3.4.0
-            pdo_oci_version: 1.0
+            pdo_oci_version: "1.0"
             pdo_oci_name: PDO_OCI
             deprecated: false
           - version: 8.1
@@ -121,7 +121,7 @@ jobs:
             lsphp_version: lsphp81
             php_tag_version: php81
             oci_version: 3.2.1
-            pdo_oci_version: 1.0
+            pdo_oci_version: "1.0"
             pdo_oci_name: PDO_OCI
             deprecated: true
           - version: 8.0
@@ -129,7 +129,7 @@ jobs:
             lsphp_version: lsphp80
             php_tag_version: php80
             oci_version: 3.0.1
-            pdo_oci_version: 1.0
+            pdo_oci_version: "1.0"
             pdo_oci_name: PDO_OCI
             deprecated: true
           - version: 7.4
@@ -137,7 +137,7 @@ jobs:
             lsphp_version: lsphp74
             php_tag_version: php74
             oci_version: 2.2.0
-            pdo_oci_version: 1.0
+            pdo_oci_version: "1.0"
             pdo_oci_name: PDO_OCI
             deprecated: true
         php_extensions:
