@@ -78,8 +78,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta-packages.outputs.tags }}
           labels: ${{ steps.meta-packages.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ steps.meta-packages.outputs.tags }}
+          cache-to: type=inline
 
   build-lsphp:
     needs: build-base
@@ -196,5 +196,5 @@ jobs:
             PHP_DETAIL_VERSION=${{ matrix.php_version.php_detail_version }}
             OCI_VERSION=${{ matrix.php_version.oci_version }}
             PDO_OCI_VERSION=${{ matrix.php_version.pdo_oci_version }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ steps.meta-packages.outputs.tags }}
+          cache-to: type=inline
