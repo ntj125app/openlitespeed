@@ -68,7 +68,7 @@ RUN php -v && \
 FROM base AS xdebug
 
 # Install XDEBUG
-RUN /usr/bin/pecl install xdebug && \
+RUN /usr/bin/pecl install xdebug || true && \
     apt-get autoclean -y
 
 COPY ./php.d/99-xdebug.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/99-xdebug.ini
