@@ -84,6 +84,7 @@ ARG ORACLE_VERSION=21.15.0.0.0
 ARG ORACLE_SIMPLE_VERSION=2115000
 ARG ORACLE_ZIP_DIR=instantclient_21_15
 ARG OCI_VERSION=3.4.0
+ARG PDO_OCI_VERSION=1.1.0
 
 # Install Oracle Instant Client
 RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
@@ -107,6 +108,17 @@ RUN curl https://pecl.php.net/get/oci8-${OCI_VERSION}.tgz --output /oci8-${OCI_V
     make install && \
     rm -r /oci8-${OCI_VERSION} && \
     rm -r /oci8-${OCI_VERSION}.tgz && \
+    apt-get autoclean -y
+
+RUN curl https://pecl.php.net/get/pdo_oci-${PDO_OCI_VERSION}.tgz --output /pdo_oci-${PDO_OCI_VERSION}.tgz && \
+    cd / && \
+    tar -zxvf /pdo_oci-${PDO_OCI_VERSION}.tgz && \
+    cd /pdo_oci-${PDO_OCI_VERSION} && \
+    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+    ./configure -with-pdo_oci=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    make install && \
+    rm -r /pdo_oci-${PDO_OCI_VERSION} && \
+    rm -r /pdo_oci-${PDO_OCI_VERSION}.tgz && \
     apt-get autoclean -y
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
