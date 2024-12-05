@@ -125,11 +125,9 @@ RUN if [ "${PDO_OCI_VERSION}" !== "1.0" && "${PDO_OCI_VERSION}" !== "1" ]; then 
         make install && \
         rm -r /pdo_oci-${PDO_OCI_VERSION} && \
         rm -r /pdo_oci-${PDO_OCI_VERSION}.tgz && \
-        apt-get autoclean -y \
-    fi
-
-# Check PHP Version
-RUN php -v && \
+        apt-get autoclean -y; \
+    fi && \
+    php -v && \
     php -m
 
 # Target Image
