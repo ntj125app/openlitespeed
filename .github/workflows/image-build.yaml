@@ -128,9 +128,17 @@ jobs:
             php_detail_version: 8.0.30
             lsphp_version: lsphp80
             php_tag_version: php80
-            oci_version: 3.2.1
+            oci_version: 3.0.1
             swoole_version: 5.1.5
             xdebug_version: 3.3.2
+            deprecated: true
+          - version: 7.4
+            php_detail_version: 7.4.33
+            lsphp_version: lsphp74
+            php_tag_version: php74
+            oci_version: 2.2.0
+            swoole_version: 5.1.4
+            xdebug_version: 3.2.2
             deprecated: true
         php_extensions:
           - name: "base"
