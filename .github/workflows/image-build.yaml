@@ -124,15 +124,15 @@ jobs:
           - name: "base"
             experimental: false
           - name: "xdebug"
-            experimental: false
+            experimental: true
           - name: "pcov"
-            experimental: false
+            experimental: true
           - name: "oci"
             experimental: false
           - name: "oci-xdebug"
-            experimental: false
+            experimental: true
           - name: "oci-pcov"
-            experimental: false
+            experimental: true
 
     steps:
       - name: Checkout

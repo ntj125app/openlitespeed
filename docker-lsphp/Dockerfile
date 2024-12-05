@@ -1,7 +1,7 @@
 ARG BASEIMAGE=ghcr.io/ntj125app/openlitespeed:base
 
 # Base Image
-FROM ${BASEIMAGE} AS base
+FROM ${BASEIMAGE} AS base-ols
 
 ARG PHP_VERSION
 ARG LS_VERSION
@@ -17,27 +17,57 @@ RUN apt-get install -y ${LS_VERSION} ${LS_VERSION}-common ${LS_VERSION}-curl ${L
 COPY ./php.d/max-file-upload.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/max-file-upload.ini
 COPY ./php.d/mem-limit.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/mem-limit.ini
 
+# Check PHP Version
+RUN php -v && \
+    php -m
+
+FROM base-ols AS base-php-redis
+
 # Install Base PHP Extensions
 RUN /usr/bin/pecl install redis && \
     apt-get autoclean -y
 
 COPY ./php.d/20-redis.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-redis.ini
 
+# Check PHP Version
+RUN php -v && \
+    php -m
+
+FROM base-php-redis AS base-php-mongodb
+
 RUN /usr/bin/pecl install mongodb && \
     apt-get autoclean -y
 
 COPY ./php.d/20-mongodb.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-mongodb.ini
+
+# Check PHP Version
+RUN php -v && \
+    php -m
+
+FROM base-php-mongodb AS base-php-excimer
 
 RUN /usr/bin/pecl install excimer && \
     apt-get autoclean -y
 
 COPY ./php.d/20-excimer.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-excimer.ini
 
+# Check PHP Version
+RUN php -v && \
+    php -m
+
+FROM base-php-excimer AS base-php-memcached
+
 RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
     /usr/bin/pecl install memcached && \
     apt-get autoclean -y
 
 COPY ./php.d/20-memcached.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-memcached.ini
+
+# Check PHP Version
+RUN php -v && \
+    php -m
+
+FROM base-php-memcached AS base
 
 COPY ./php.d/20-swoole.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-swoole.ini
 
