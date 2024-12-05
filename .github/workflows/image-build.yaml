@@ -98,13 +98,15 @@ jobs:
             php_tag_version: latest
             oci_version: 3.4.0
             pdo_oci_version: 1.1.0
+            pdo_oci_name: pdo_oci
             deprecated: false
           - version: 8.3
             php_detail_version: 8.3.14
             lsphp_version: lsphp83
             php_tag_version: php83
             oci_version: 3.4.0
-            pdo_oci_version: 1.0
+            pdo_oci_version: 1.1.0
+            pdo_oci_name: pdo_oci
             deprecated: false
           - version: 8.2
             php_detail_version: 8.2.26
@@ -112,6 +114,7 @@ jobs:
             php_tag_version: php82
             oci_version: 3.4.0
             pdo_oci_version: 1.0
+            pdo_oci_name: PDO_OCI
             deprecated: false
           - version: 8.1
             php_detail_version: 8.1.31
@@ -119,6 +122,7 @@ jobs:
             php_tag_version: php81
             oci_version: 3.2.1
             pdo_oci_version: 1.0
+            pdo_oci_name: PDO_OCI
             deprecated: true
           - version: 8.0
             php_detail_version: 8.0.30
@@ -126,6 +130,7 @@ jobs:
             php_tag_version: php80
             oci_version: 3.0.1
             pdo_oci_version: 1.0
+            pdo_oci_name: PDO_OCI
             deprecated: true
           - version: 7.4
             php_detail_version: 7.4.33
@@ -133,6 +138,7 @@ jobs:
             php_tag_version: php74
             oci_version: 2.2.0
             pdo_oci_version: 1.0
+            pdo_oci_name: PDO_OCI
             deprecated: true
         php_extensions:
           - name: "base"
@@ -196,5 +202,6 @@ jobs:
             PHP_DETAIL_VERSION=${{ matrix.php_version.php_detail_version }}
             OCI_VERSION=${{ matrix.php_version.oci_version }}
             PDO_OCI_VERSION=${{ matrix.php_version.pdo_oci_version }}
+            PDO_OCI_NAME=${{ matrix.php_version.pdo_oci_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
