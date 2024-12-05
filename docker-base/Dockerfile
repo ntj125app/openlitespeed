@@ -1,6 +1,7 @@
-FROM litespeedtech/openlitespeed:latest
+FROM debian:12-slim
 
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y curl wget && \
+    wget -O - https://repo.litespeed.sh | bash && \
     apt-get autoclean -y && \
     rm /entrypoint.sh && \
     /usr/local/lsws/admin/misc/lsup.sh && \
