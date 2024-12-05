@@ -39,11 +39,11 @@ RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
 
 COPY ./php.d/20-memcached.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-memcached.ini
 
-RUN apt-get install -y libbrotli-dev && \
-    /usr/bin/pecl install swoole || true && \
-    apt-get autoclean -y
-
 COPY ./php.d/20-swoole.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-swoole.ini
+
+RUN apt-get install -y libbrotli-dev && \
+    /usr/bin/pecl install swoole || rm -r /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-swoole.ini && \
+    apt-get autoclean -y
 
 # Check PHP Version
 RUN php -v && \
@@ -147,7 +147,7 @@ RUN php -v && \
 FROM oci AS oci-xdebug
 
 # Install XDEBUG
-RUN /usr/bin/pecl install xdebug || true && \
+RUN /usr/bin/pecl install xdebug && \
     apt-get autoclean -y
 
 COPY ./php.d/99-xdebug.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/99-xdebug.ini
