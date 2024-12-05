@@ -112,22 +112,21 @@ RUN curl https://pecl.php.net/get/oci8-${OCI_VERSION}.tgz --output /oci8-${OCI_V
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
 
-COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini
+COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini
 
-RUN if [ "${PDO_OCI_VERSION}" === "1.0" || "${PDO_OCI_VERSION}" === "1" ]; then \
-    rm -r /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
-    exit 0; \
-    fi && \
-    curl https://pecl.php.net/get/pdo_oci-${PDO_OCI_VERSION}.tgz --output /pdo_oci-${PDO_OCI_VERSION}.tgz && \
-    cd / && \
-    tar -zxvf /pdo_oci-${PDO_OCI_VERSION}.tgz && \
-    cd /pdo_oci-${PDO_OCI_VERSION} && \
-    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
-    ./configure -with-pdo_oci=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
-    make install && \
-    rm -r /pdo_oci-${PDO_OCI_VERSION} && \
-    rm -r /pdo_oci-${PDO_OCI_VERSION}.tgz && \
-    apt-get autoclean -y
+RUN if [ "${PDO_OCI_VERSION}" !== "1.0" && "${PDO_OCI_VERSION}" !== "1" ]; then \
+        mv /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
+        curl https://pecl.php.net/get/pdo_oci-${PDO_OCI_VERSION}.tgz --output /pdo_oci-${PDO_OCI_VERSION}.tgz && \
+        cd / && \
+        tar -zxvf /pdo_oci-${PDO_OCI_VERSION}.tgz && \
+        cd /pdo_oci-${PDO_OCI_VERSION} && \
+        /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+        ./configure -with-pdo_oci=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+        make install && \
+        rm -r /pdo_oci-${PDO_OCI_VERSION} && \
+        rm -r /pdo_oci-${PDO_OCI_VERSION}.tgz && \
+        apt-get autoclean -y \
+    fi
 
 # Check PHP Version
 RUN php -v && \
