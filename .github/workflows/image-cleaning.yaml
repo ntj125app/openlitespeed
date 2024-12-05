@@ -1,0 +1,26 @@
+name: Container Image Build
+
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  PACKAGE_NAME: ${{ github.repository_owner }}/${{ vars.IMAGE_NAME }}
+  REGISTRY_DOCKER: docker.io
+  IMAGE_NAME_DOCKER: ${{ vars.DOCKERHUB_REPO }}
+
+jobs:
+  cleanup-untagged-images:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Delete all containers from package without tags
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ vars.IMAGE_NAME }}
+          package-type: container
+          min-versions-to-keep: 20
+          delete-only-untagged-versions: true

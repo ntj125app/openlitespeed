@@ -18,20 +18,6 @@ env:
   IMAGE_NAME_DOCKER: ${{ vars.DOCKERHUB_REPO }}
 
 jobs:
-  cleanup-untagged-images:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Delete all containers from package without tags
-        uses: actions/delete-package-versions@v5
-        with:
-          package-name: ${{ vars.IMAGE_NAME }}
-          package-type: container
-          min-versions-to-keep: 20
-          delete-only-untagged-versions: true
-
   build-base:
     if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
