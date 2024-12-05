@@ -40,7 +40,7 @@ RUN apt-get install -y libmemcached-dev zlib1g-dev pkg-config && \
 COPY ./php.d/20-memcached.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-memcached.ini
 
 RUN apt-get install -y libbrotli-dev && \
-    /usr/bin/pecl install swoole && \
+    /usr/bin/pecl install swoole || true && \
     apt-get autoclean -y
 
 COPY ./php.d/20-swoole.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-swoole.ini
