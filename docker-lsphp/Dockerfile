@@ -98,7 +98,15 @@ RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
 
 ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}
 
-RUN /usr/bin/pecl install oci8 && \
+RUN curl https://pecl.php.net/get/oci8-${OCI_VERSION}.tgz --output /oci8-${OCI_VERSION}.tgz && \
+    cd / && \
+    tar -zxvf /oci8-${OCI_VERSION}.tgz && \
+    cd /oci8-${OCI_VERSION} && \
+    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
+    ./configure -with-oci8=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
+    make install && \
+    rm -r /oci8-${OCI_VERSION} && \
+    rm -r /oci8-${OCI_VERSION}.tgz && \
     apt-get autoclean -y
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
