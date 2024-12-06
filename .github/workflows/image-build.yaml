@@ -285,6 +285,7 @@ jobs:
             LS_VERSION=${{ matrix.php_version.lsphp_version }}
             PHP_VERSION=${{ matrix.php_version.version }}
             PHP_DETAIL_VERSION=${{ matrix.php_version.php_detail_version }}
+            PHP_TAG_VERSION=${{ matrix.php_version.php_tag_version }}
             OCI_VERSION=${{ matrix.php_version.oci_version }}
             OCI_PDO_INSTALL=${{ matrix.php_extensions.oci_pdo_install }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache

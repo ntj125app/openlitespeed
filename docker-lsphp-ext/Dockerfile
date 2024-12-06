@@ -1,10 +1,10 @@
 ARG PHP_VERSION
 ARG LS_VERSION
 ARG PHP_DETAIL_VERSION
-ARG BASEIMAGE=ghcr.io/ntj125app/openlitespeed:${LS_VERSION}-base
+ARG PHP_TAG_VERSION
 
 # Target Image
-FROM ${BASEIMAGE} AS pcov
+FROM ghcr.io/ntj125app/openlitespeed:${PHP_TAG_VERSION}-base AS pcov
 
 ARG PCOV_VERSION=1.0.11
 
@@ -19,7 +19,7 @@ RUN php -v && \
     php -m
 
 # Target Image
-FROM ${BASEIMAGE} AS xdebug
+FROM ghcr.io/ntj125app/openlitespeed:${PHP_TAG_VERSION}-base AS xdebug
 
 # Install XDEBUG
 RUN /usr/bin/pecl install xdebug && \
@@ -32,7 +32,7 @@ RUN php -v && \
     php -m
 
 # Target Image
-FROM ${BASEIMAGE} AS oci
+FROM ghcr.io/ntj125app/openlitespeed:${PHP_TAG_VERSION}-base AS oci
 
 ARG ORACLE_VERSION=21.15.0.0.0
 ARG ORACLE_SIMPLE_VERSION=2115000
