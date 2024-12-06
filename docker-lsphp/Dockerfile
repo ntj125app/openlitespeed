@@ -140,7 +140,7 @@ COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mo
 COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini
 
 RUN if [ "${PDO_OCI_VERSION}" !== "1.0" && "${PDO_OCI_VERSION}" !== "1" ]; then \
-        yes "instantclient,$LD_LIBRARY_PATH" | /usr/bin/pecl install pdo_oci && \
+        yes "instantclient,$LD_LIBRARY_PATH" | pecl install pdo_oci; \
         mv /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
     fi && \
     php -v && \
