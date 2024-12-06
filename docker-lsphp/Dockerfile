@@ -128,6 +128,7 @@ RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
     apt-get autoclean -y
 
 ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}
+ENV ORACLE_HOME=/usr/oracle/${ORACLE_ZIP_DIR}
 
 RUN if [ "${OCI_VERSION}" !== "1.0" && "${OCI_VERSION}" !== "1" ]; then \
         pecl install oci8-${OCI_VERSION} --with-oci8=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} ; \
