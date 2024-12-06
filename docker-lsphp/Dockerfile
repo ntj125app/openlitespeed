@@ -12,7 +12,8 @@ RUN apt-get install -y ${LS_VERSION} ${LS_VERSION}-common ${LS_VERSION}-curl ${L
     apt-get autoclean -y && \
     ln -sf /usr/local/lsws/${LS_VERSION}/bin/php /usr/bin/php && \
     ln -sf /usr/local/lsws/${LS_VERSION} /usr/local/lsws/lsactive &&\
-    chmod a+x /entrypoint.sh
+    chmod a+x /entrypoint.sh && \
+    pecl channel-update pecl.php.net
 
 COPY ./php.d/max-file-upload.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/max-file-upload.ini
 COPY ./php.d/mem-limit.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/mem-limit.ini
@@ -137,13 +138,16 @@ RUN if [ "${OCI_VERSION}" !== "1.0" && "${OCI_VERSION}" !== "1" ]; then \
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
 
-COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini
+COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini
 
 RUN if [ "${PDO_OCI_VERSION}" !== "1.0" && "${PDO_OCI_VERSION}" !== "1" ]; then \
         yes "instantclient,$LD_LIBRARY_PATH" | pecl install pdo_oci; \
-        mv /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
-    fi && \
-    php -v && \
+    else \
+        rm -f /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
+    fi
+
+# Check PHP Version
+RUN php -v && \
     php -m
 
 # Target Image
