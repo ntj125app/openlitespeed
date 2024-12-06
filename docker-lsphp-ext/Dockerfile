@@ -53,10 +53,10 @@ RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
     echo /usr/oracle/${ORACLE_ZIP_DIR} > /etc/ld.so.conf.d/oracle-instantclient.conf && \
     ldconfig
 
-RUN if [ "${OCI_VERSION}" -ne 1 ]; then \
-        yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install oci8-${OCI_VERSION}; \
-    else \
+RUN if [ "${OCI_VERSION}" -eq 1 ]; then \
         yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install oci8; \
+    else \
+        yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install oci8-${OCI_VERSION}; \
     fi
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
