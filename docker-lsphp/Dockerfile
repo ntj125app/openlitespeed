@@ -130,9 +130,9 @@ RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
 ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}
 
 RUN if [ "${OCI_VERSION}" !== "1.0" && "${OCI_VERSION}" !== "1" ]; then \
-        pecl install oci8-${OCI_VERSION}; \
+        pecl install oci8-${OCI_VERSION} --with-oci8=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} ; \
     else \
-        pecl install oci8; \
+        pecl install oci8 --with-oci8=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} ; \
     fi
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
@@ -140,7 +140,7 @@ COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mo
 COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini
 
 RUN if [ "${PDO_OCI_VERSION}" !== "1.0" && "${PDO_OCI_VERSION}" !== "1" ]; then \
-        export ORACLE_HOME=/usr/oracle/${ORACLE_ZIP_DIR} && /usr/bin/pecl install pdo_oci && \
+        /usr/bin/pecl install pdo_oci --with-pdo_oci=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} && \
         mv /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
     fi && \
     php -v && \
