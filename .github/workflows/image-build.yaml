@@ -276,7 +276,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: ./docker-lsphp
+          context: ./docker-lsphp-ext
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta-packages.outputs.tags }}
           labels: ${{ steps.meta-packages.outputs.labels }}
