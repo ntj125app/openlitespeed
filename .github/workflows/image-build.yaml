@@ -188,21 +188,21 @@ jobs:
             php_detail_version: 8.3.13
             lsphp_version: lsphp83
             php_tag_version: latest
-            oci_version: "1"
+            oci_version: 1
             oci_pdo_install: 1
             deprecated: false
           - version: 8.3
             php_detail_version: 8.3.13
             lsphp_version: lsphp83
             php_tag_version: php83
-            oci_version: "1"
+            oci_version: 1
             oci_pdo_install: 1
             deprecated: false
           - version: 8.2
             php_detail_version: 8.2.26
             lsphp_version: lsphp82
             php_tag_version: php82
-            oci_version: "1"
+            oci_version: 1
             oci_pdo_install: 0
             deprecated: false
           - version: 8.1

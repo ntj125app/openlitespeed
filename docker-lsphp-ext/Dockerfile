@@ -53,7 +53,7 @@ RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
     echo /usr/oracle/${ORACLE_ZIP_DIR} > /etc/ld.so.conf.d/oracle-instantclient.conf && \
     ldconfig
 
-RUN if [ "${OCI_VERSION}" != "1.0" && "${OCI_VERSION}" != "1" ]; then \
+RUN if [ "${OCI_VERSION}" -ne 1 ]; then \
         yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install oci8-${OCI_VERSION}; \
     else \
         yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install oci8; \
