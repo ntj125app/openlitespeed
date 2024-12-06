@@ -135,7 +135,6 @@ RUN if [ "${OCI_VERSION}" != "1.0" && "${OCI_VERSION}" != "1" ]; then \
         rm -f /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
     else \
         yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install oci8; \
-        yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install pdo_oci; \
     fi
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
