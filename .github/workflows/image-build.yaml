@@ -227,8 +227,6 @@ jobs:
             oci_pdo_install: 0
             deprecated: true
         php_extensions:
-          - name: "base"
-            experimental: false
           - name: "xdebug"
             experimental: true
           - name: "pcov"
