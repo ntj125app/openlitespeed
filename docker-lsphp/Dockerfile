@@ -129,33 +129,19 @@ RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
 
 ENV LD_LIBRARY_PATH=/usr/oracle/${ORACLE_ZIP_DIR}
 
-RUN curl https://pecl.php.net/get/oci8-${OCI_VERSION}.tgz --output /oci8-${OCI_VERSION}.tgz && \
-    cd / && \
-    tar -zxvf /oci8-${OCI_VERSION}.tgz && \
-    cd /oci8-${OCI_VERSION} && \
-    /usr/local/lsws/${LS_VERSION}/bin/phpize && \
-    ./configure -with-oci8=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
-    make install && \
-    rm -r /oci8-${OCI_VERSION} && \
-    rm -r /oci8-${OCI_VERSION}.tgz && \
-    apt-get autoclean -y
+RUN if [ "${OCI_VERSION}" !== "1.0" && "${OCI_VERSION}" !== "1" ]; then \
+        pecl install oci8-${OCI_VERSION}; \
+    else \
+        pecl install oci8; \
+    fi
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
 
 COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini
 
 RUN if [ "${PDO_OCI_VERSION}" !== "1.0" && "${PDO_OCI_VERSION}" !== "1" ]; then \
+        export ORACLE_HOME=/usr/oracle/${ORACLE_ZIP_DIR} && /usr/bin/pecl install pdo_oci && \
         mv /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
-        curl https://pecl.php.net/get/pdo_oci-${PDO_OCI_VERSION}.tgz --output /pdo_oci-${PDO_OCI_VERSION}.tgz && \
-        cd / && \
-        tar -zxvf /pdo_oci-${PDO_OCI_VERSION}.tgz && \
-        cd /pdo_oci-${PDO_OCI_VERSION} && \
-        /usr/local/lsws/${LS_VERSION}/bin/phpize && \
-        ./configure -with-pdo_oci=instantclient,/usr/oracle/${ORACLE_ZIP_DIR} --with-php-config=/usr/local/lsws/${LS_VERSION}/bin/php-config && \
-        make install && \
-        rm -r /pdo_oci-${PDO_OCI_VERSION} && \
-        rm -r /pdo_oci-${PDO_OCI_VERSION}.tgz && \
-        apt-get autoclean -y; \
     fi && \
     php -v && \
     php -m
