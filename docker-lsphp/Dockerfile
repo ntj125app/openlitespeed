@@ -115,7 +115,6 @@ ARG ORACLE_VERSION=21.15.0.0.0
 ARG ORACLE_SIMPLE_VERSION=2115000
 ARG ORACLE_ZIP_DIR=instantclient_21_15
 ARG OCI_VERSION=3.4.0
-ARG PDO_OCI_VERSION=1.1.0
 
 # Install Oracle Instant Client
 RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
