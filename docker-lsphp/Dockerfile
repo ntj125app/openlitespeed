@@ -115,7 +115,6 @@ ARG ORACLE_VERSION=21.15.0.0.0
 ARG ORACLE_SIMPLE_VERSION=2115000
 ARG ORACLE_ZIP_DIR=instantclient_21_15
 ARG OCI_VERSION=3.4.0
-ARG OCI_PDO_INSTALL=0
 
 # Install Oracle Instant Client
 RUN apt-get install -y libaio-dev libaio1 unzip && mkdir -p /usr/oracle && \
@@ -135,6 +134,7 @@ RUN if [ "${OCI_VERSION}" != "1.0" && "${OCI_VERSION}" != "1" ]; then \
         rm -f /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
     else \
         yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install oci8; \
+        export OCI_PDO_INSTALL=active; \
     fi
 
 COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-oci8.ini
@@ -143,7 +143,7 @@ COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}
 
 RUN if [ "${OCI_PDO_INSTALL}" == "active" ]; then \
         echo 'Installing OCI8 PDO'; \
-        yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install pdo_oci; \
+        yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install pdo_oci || true; \
     else \
         echo 'Skipping . . . Installing OCI8 PDO'; \
         rm -f /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini; \
