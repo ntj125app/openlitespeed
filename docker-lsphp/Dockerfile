@@ -141,7 +141,7 @@ COPY ./php.d/20-oci8.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mo
 
 COPY ./php.d/20-pdo_oci.ini /usr/local/lsws/${LS_VERSION}/etc/php/${PHP_VERSION}/mods-available/20-pdo_oci.ini
 
-RUN if [ "${OCI_PDO_INSTALL}" -eq 1 ]; then \
+RUN if [ "${OCI_PDO_INSTALL}" == "active" ]; then \
         echo 'Installing OCI8 PDO'; \
         yes "instantclient,/usr/oracle/${ORACLE_ZIP_DIR}" | pecl install pdo_oci; \
     else \
