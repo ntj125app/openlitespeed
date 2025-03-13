@@ -1,4 +1,4 @@
-[![Build Run](https://github.com/ntj125app/openlitespeed/actions/workflows/docker-build.yaml/badge.svg)](https://github.com/ntj125app/openlitespeed/actions/workflows/docker-build.yaml)
+[![Build Run](https://github.com/ntj125app/openlitespeed/actions/workflows/image-build.yaml/badge.svg)](https://github.com/ntj125app/openlitespeed/actions/workflows/image-build.yaml)
 
 # What is this repository?
 
